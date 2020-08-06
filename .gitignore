@@ -11,6 +11,9 @@
 # production
 /build
 
+#client id
+.env
+
 # misc
 .DS_Store
 .env.local
