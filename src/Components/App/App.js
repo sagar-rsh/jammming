@@ -4,6 +4,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../util/Spotify';
+import Player from '../Player/Player';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,12 +13,14 @@ class App extends React.Component {
       searchResults: [],
       playlistName: 'New Playlist',
       playlistTracks: [],
+      currentTrackId: null,
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.onToggleTrackPlay = this.onToggleTrackPlay.bind(this);
   }
 
   addTrack(track) {
@@ -57,18 +60,27 @@ class App extends React.Component {
     });
   }
 
+  onToggleTrackPlay(trackId) {
+    this.setState({ currentTrackId: trackId });
+  }
+
   render() {
     return (
       <div>
         <h1>
-          <span className='highlight'>zz</span>zz
+          <span className='highlight'></span>
         </h1>
         <div className='App'>
-          <SearchBar onSearch={this.search} />
+          <div className='App-player'>
+            <SearchBar onSearch={this.search} />
+            <Player currentTrackId={this.state.currentTrackId} />
+          </div>
           <div className='App-playlist'>
             <SearchResults
               searchResults={this.state.searchResults}
               onAdd={this.addTrack}
+              onToggleTrackPlay={this.onToggleTrackPlay}
+              playingNow={this.state.currentTrackId}
             />
             <Playlist
               playlistName={this.state.playlistName}
@@ -76,6 +88,8 @@ class App extends React.Component {
               onRemove={this.removeTrack}
               onNameChange={this.updatePlaylistName}
               onSave={this.savePlaylist}
+              onToggleTrackPlay={this.onToggleTrackPlay}
+              playingNow={this.state.currentTrackId}
             />
           </div>
         </div>

@@ -23,6 +23,8 @@ class Playlist extends React.Component {
           tracks={this.props.playlistTracks}
           onRemove={this.props.onRemove}
           isRemoval={true}
+          onToggleTrackPlay={this.props.onToggleTrackPlay}
+          playingNow={this.props.playingNow}
         />
         <button className='Playlist-save' onClick={this.props.onSave}>
           SAVE TO SPOTIFY
